@@ -1,30 +1,17 @@
 const express=require("express");
-const multer=require("multer");
-const { addFood, removeFood, listFood } = require("../controllers/foodControllers");
+const { login, register } = require("../controllers/userControllers");
 
 
-//Router for the FoodModel onlu
-const foodRouter=express.Router();
 
-//Storage to add the Images of the food
-const storage=multer.diskStorage({
-    destination:"uploads",
-    filename:(req,filename,callback)=>{
-        return callback(null,`${Date.now()}-${filename.originalname}`);
-    }
-})
-
-const uploads=multer({storage:storage});
+//Router to manage the Authentication
+const userRouter=express.Router();
 
 
-//Route to add Foods
-foodRouter.post("/add",uploads.single("image"),addFood);
+//Route to login the user in DB
+userRouter.post("/login",login);
 
-//Route to remove Foods
-foodRouter.post("/remove",removeFood);
-
-//Route to list all the Foods
-foodRouter.get("/list",listFood);
+//Route to register the user in DB
+userRouter.post("/register",register);
 
 
-module.exports=foodRouter;
+module.exports=userRouter;

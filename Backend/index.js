@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const foodRouter=require("./routes/foodRoute");
+const userRouter = require("./routes/userRoute");
 require("dotenv").config();
 
 const app = express();
@@ -20,6 +21,7 @@ connectDB();
 
 //API's complete end points
 app.use("/api/food",foodRouter);
+app.use("/api/user",userRouter);
 
 
 // Test routes
