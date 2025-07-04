@@ -1,0 +1,21 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4%;
+}
+.navbar .logo{
+    width: max(10%,80px);
+}
+.navbar .profile{
+    width: 40px;
+}
+.header-name{
+    font-size: 30px;
+    color: rgba(254, 119, 0, 0.751);
+    font-weight: 600;   
+}
+.header-admin{
+    font-weight: 500;
+
+}
