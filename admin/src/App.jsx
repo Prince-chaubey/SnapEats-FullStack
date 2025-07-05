@@ -1,20 +1,20 @@
-import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Sidebar from './components/Sidebar/Sidebar'
-import { Route, Routes } from 'react-router-dom'
-import Add from './pages/Add/Add'
-import List from './pages/List/List'
-import Orders from './pages/Orders/Orders'
+import React from 'react';
+import Navbar from './components/Navbar/Navbar';
+import Sidebar from './components/Sidebar/Sidebar';
+import { Route, Routes } from 'react-router-dom';
+import Add from './pages/Add/Add';
+import List from './pages/List/List';
+import Orders from './pages/Orders/Orders';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <div className='app'>
-      <ToastContainer />
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
       <Navbar />
       <hr />
-      <div className="app-content">
+      <div className="app-content" style={{ display: 'flex' }}>
         <Sidebar />
         <Routes>
           <Route path="/add" element={<Add />} />
@@ -23,7 +23,7 @@ const App = () => {
         </Routes>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
