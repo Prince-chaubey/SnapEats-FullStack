@@ -8,7 +8,7 @@ const Order = () => {
 
   const [orders, setOrders] = useState([]);
 
-  const fetchAllOrders = async () =>{
+  const fetchAllOrders = async () => {
     const response = await axios.get(`${url}/api/order/list`)
     if (response.data.success) {
       setOrders(response.data.data.reverse());
