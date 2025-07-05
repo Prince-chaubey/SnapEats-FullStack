@@ -8,7 +8,7 @@ const fs=require("fs");
 const addFood=async(req,res)=>{
     
     //File access to store the image of food
-    const file_name=req.file?.file_name || " ";
+    const file_name = req.file?.filename || " ";
 
   const newfood = new foodModel({
     name: req.body.name,
@@ -33,7 +33,7 @@ const addFood=async(req,res)=>{
 
 //Controller to remove food from the database
 const removeFood=async(req,res)=>{
-     const id=req.id;
+     const id=req.body.id;
      //Foound food via id
     try{
         const food=await foodModel.findById(id);
@@ -41,7 +41,7 @@ const removeFood=async(req,res)=>{
         fs.unlink(`uploads/${food.image}`,()=>{});
         //Deleted the food 
         await foodModel.findByIdAndDelete(id);
-        res.json({success:true,success:"Food removed!"});
+        res.json({success:true,message:"Food removed!"});
 
     }
     catch(err){

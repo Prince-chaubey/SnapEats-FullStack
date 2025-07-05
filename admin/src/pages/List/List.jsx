@@ -8,6 +8,8 @@ const List = () => {
 
   const [list, setList] = useState([]);
 
+
+  //Function to store the all added food in setList state 
   const fetchList = async () => {
     const response = await axios.get(`${url}/api/food/list`)
     if (response.data.success) {
@@ -18,11 +20,16 @@ const List = () => {
     }
   }
 
+
+  //Function to remove Food
+
   const removeFood = async (foodId) => {
     const response = await axios.post(`${url}/api/food/remove`, {
       id: foodId
     })
+    //Updating the setFood as we have removed one food from the list
     await fetchList();
+
     if (response.data.success) {
       toast.success(response.data.message);
     }
@@ -49,7 +56,7 @@ const List = () => {
         {list.map((item, index) => {
           return (
             <div key={index} className='list-table-format'>
-              <img src={`${url}/images/` + item.image} alt="" />
+              <img src={`${url}/uploads/`+ item.image} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>{currency}{item.price}</p>
