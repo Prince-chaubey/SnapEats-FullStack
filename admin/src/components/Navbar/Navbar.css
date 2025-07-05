@@ -10,11 +10,3 @@
 .navbar .profile{
     width: 40px;
 }
-.header-name{
-    font-size: 30px;
-    color: rgba(254, 119, 0, 0.751);
-    font-weight: 600;   
-}
-.header-admin{
-    font-weight: 500;
-}
