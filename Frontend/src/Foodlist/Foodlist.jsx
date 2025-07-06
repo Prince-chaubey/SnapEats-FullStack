@@ -3,7 +3,7 @@ import { contextStore } from '../Context/storeContext';
 import { assets } from '../assets/assets';
 
 const Foodlist = () => {
-    const { food_list, cartItem, addCart, removeCart } = useContext(contextStore);
+    const { food_list, cartItem, addCart, removeCart,url } = useContext(contextStore);
 
 
     return (
@@ -14,12 +14,13 @@ const Foodlist = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
                 {food_list.map((food) => (
+                     
                     <div
                         key={food._id}
                         className="bg-white rounded-2xl shadow-md p-5 hover:shadow-xl transition duration-300"
                     >
                         <img
-                            src={food.image}
+                            src={url+"/uploads/"+food.image}
                             alt={food.name}
                             className="mx-auto object-cover mb-4 rounded-lg"
                         />

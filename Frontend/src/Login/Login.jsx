@@ -13,7 +13,6 @@ const Login = () => {
     url,
     setToken,
     setLoggedUser,
-    loggedUser
   } = useContext(contextStore);
 
   const [user, setUser] = useState({
