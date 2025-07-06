@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const contextStore = createContext();
 
@@ -8,14 +9,17 @@ export const ContextProvider = (props) => {
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [token, setToken] = useState("");
+  const [loggedUser, setLoggedUser] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  //URL for API END POINT
-  let url = "http://localhost:8080";
-
-  //All the food list
+  const url = "http://localhost:8080";
   const [food_list, setFoodList] = useState([]);
 
-  //Function to fetch all the foods from the Backend
+  // Fetch food items from backend
   const fetchFood = async () => {
     try {
       const response = await axios.get(url + "/api/food/list");
@@ -25,57 +29,68 @@ export const ContextProvider = (props) => {
     }
   };
 
-  const [loggedUser, setLoggedUser] = useState("");
+  // Load user's cart data
+  const loadCartData = async (token) => {
+    try {
+      const response = await axios.post(url + "/api/cart/get", {}, {
+        headers: { token },
+      });
+      setCartItem(response.data.cartData);
+    } catch (error) {
+      console.error("Failed to fetch cart:", error);
+    }
+  };
 
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  //Function to add item in the cart
-
-  const addCart = (id) => {
+  // Add item to cart
+  const addCart = async (id) => {
     setCartItem((prev) => ({
       ...prev,
       [id]: prev[id] ? prev[id] + 1 : 1,
     }));
+
+    if (token) {
+     const response=await axios.post(url + "/api/cart/add", { itemId: id }, {
+        headers: { token },
+      });
+      toast.success(response.data.message);
+    }
   };
 
-  //Calculating the total amount to product
+  // Remove item from cart
+  const removeCart = async (id) => {
+    setCartItem((prev) => {
+      if (!prev[id]) return prev;
+      const updated = { ...prev, [id]: prev[id] - 1 };
+      if (updated[id] === 0) delete updated[id];
+      return updated;
+    });
+
+    if (token) {
+      const response=await axios.post(url + "/api/cart/remove", { itemId: id }, {
+        headers: { token },
+      });
+      toast.success(response.data.message);
+    }
+  };
+
   const deliveryFee = 50;
   let subtotal = 0;
-
   food_list.forEach((food) => {
     if (cartItem[food._id]) {
       subtotal += food.price * cartItem[food._id];
     }
   });
 
-  //Calculating the total amount including Delivery Fee
-
   const total = subtotal + deliveryFee;
 
-  //Function to remove food from the cart
-
-  const removeCart = (id) => {
-    setCartItem((prev) => {
-      if (!prev[id]) return prev;
-      const updated = { ...prev, [id]: prev[id] - 1 };
-      if (updated[id] === 0) {
-        delete updated[id];
-      }
-      return updated;
-    });
-  };
-
-  //Maintaining the user login
+  // On component mount
   useEffect(() => {
-    //A particular to function Fetch Food
     const loadData = async () => {
       await fetchFood();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        setToken(storedToken);
+        await loadCartData(storedToken);
       }
     };
     loadData();
