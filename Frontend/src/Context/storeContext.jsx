@@ -15,7 +15,10 @@ export const ContextProvider = (props) => {
     email: "",
     password: "",
   });
+  
+  const [userId,setUserId]=useState("");
 
+  const currency="₹";
   const url = "http://localhost:8080";
   const [food_list, setFoodList] = useState([]);
 
@@ -52,7 +55,7 @@ export const ContextProvider = (props) => {
      const response=await axios.post(url + "/api/cart/add", { itemId: id }, {
         headers: { token },
       });
-      toast.success(response.data.message);
+     
     }
   };
 
@@ -69,7 +72,7 @@ export const ContextProvider = (props) => {
       const response=await axios.post(url + "/api/cart/remove", { itemId: id }, {
         headers: { token },
       });
-      toast.success(response.data.message);
+       
     }
   };
 
@@ -117,6 +120,8 @@ export const ContextProvider = (props) => {
         setToken,
         setLoggedUser,
         loggedUser,
+        currency,
+        
       }}
     >
       {props.children}

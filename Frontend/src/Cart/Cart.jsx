@@ -53,7 +53,7 @@ const Cart = () => {
                 />
               </div>
               <div className="col-span-2 text-center">{food.name}</div>
-              <div className="col-span-2">₹{food.price}</div>
+              <div className="col-span-2">₹{food.price*100}</div>
               <div className="col-span-2 flex items-center justify-center gap-2">
                 <button
                   onClick={() => removeCart(food._id)}
@@ -69,7 +69,7 @@ const Cart = () => {
                   +
                 </button>
               </div>
-              <div className="col-span-2">₹{total}</div>
+              <div className="col-span-2">₹{total*100}</div>
               <div className="col-span-1 flex justify-center">
                 <button
                   onClick={() => removeCart(food._id)}
@@ -98,7 +98,7 @@ const Cart = () => {
 
           <div className="flex justify-between mb-3 text-gray-700">
             <span>Subtotal</span>
-            <span>₹{subtotal}</span>
+            <span>₹{subtotal*100}</span>
           </div>
 
           <div className="flex justify-between mb-3 text-gray-700">
@@ -110,7 +110,7 @@ const Cart = () => {
 
           <div className="flex justify-between text-lg font-semibold text-gray-800">
             <span>Total</span>
-            <span>₹{subtotal === 0 ? 0 : total}</span>
+            <span>₹{subtotal === 0 ? 0 : total*100+deliveryFee}</span>
           </div>
 
           {cartItem && Object.keys(cartItem).length > 0 ? (

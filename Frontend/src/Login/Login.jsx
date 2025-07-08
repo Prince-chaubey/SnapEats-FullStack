@@ -46,6 +46,7 @@ const Login = () => {
 
        
         setLoggedUser(response.data.username);
+        localStorage.setItem("userId",response.data.userId);
         
 
         toast.success("Login Successful!");

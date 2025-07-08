@@ -12,6 +12,7 @@ import Contact from './Contact/Contact';
 import Cart from './Cart/Cart';
 import PlaceOrder from './PlaceOrder/PlaceOrder';
 import SearchFood from './SearchFood/SearchFood';
+import VerifyPage from './Verify/Verify';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/Cart" element={<Cart />} />
           <Route path="/PlaceOrder" element={<PlaceOrder />} />
           <Route path="/SearchFood" element={<SearchFood />} />
+          <Route path="/verify" element={<VerifyPage/>} />
         </Routes>
 
         <Footer />

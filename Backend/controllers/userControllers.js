@@ -17,7 +17,7 @@ const login=async(req,res)=>{
     try{
         const user=await userModel.findOne({email});
         
-        //If user has not signed with the entered email!
+        //If user has not signed with the e ntered email!
         if(!user) return res.json({success:false,message:"User doesn't exist!"});
 
         //If password doesn't match 
@@ -26,7 +26,8 @@ const login=async(req,res)=>{
 
         const token=generateToken(user._id);
         const username=user.name;
-        res.json({success:true,token,username});
+        const userId=user._id;
+        res.json({success:true,token,username,userId});
 
     }
     catch(err){

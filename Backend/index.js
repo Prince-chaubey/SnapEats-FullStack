@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const foodRouter=require("./routes/foodRoute");
 const userRouter = require("./routes/userRoute");
 const cartRouter = require("./routes/cartRoute");
+const orderRouter = require("./routes/orderRoute");
 
 require("dotenv").config();
 
@@ -25,6 +26,7 @@ connectDB();
 app.use("/api/food",foodRouter);
 app.use("/api/user",userRouter);
 app.use("/api/cart",cartRouter);
+app.use("/api/order",orderRouter);
 
 
 // Test routes
