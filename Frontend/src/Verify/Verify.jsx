@@ -15,7 +15,7 @@ const VerifyPage = () => {
           success,
           orderId
         });
-
+zzz
        
         setTimeout(() => {
           navigate('/');
