@@ -3,7 +3,7 @@ const orderModel = require("../models/orderModel");
 const stripe = require("stripe");
 
 const Stripe = new stripe(process.env.STRIPE_SECRET);
-const Frontend_URL = "http://localhost:8080";
+const Frontend_URL = "http://localhost:5173";
 
 // Placing user order from Frontend
 const placeOrder = async (req, res) => {
@@ -57,22 +57,28 @@ const placeOrder = async (req, res) => {
 
 
 const verifyPayment = async (req, res) => {
-  const { success, orderId } = req.body;
+  const { orderId, success } = req.body;
 
   try {
-    if (success === "true") {
-      await orderModel.findByIdAndUpdate(orderId, {
-        payment: true,
-        status: "Order Confirmed",
-      });
-      res.json({ success: true, message: "Payment verified and order updated." });
-    } else {
-      res.json({ success: false, message: "Payment failed or canceled." });
+    if (!orderId) {
+      return res.status(400).json({ success: false, message: "Order ID is required" });
     }
-  } catch (error) {
-    console.error("Verification Error:", error);
-    res.status(500).json({ success: false, message: "Failed to verify payment" });
+
+    const isPaymentSuccess = success === true || success === "true";
+
+    if (isPaymentSuccess) {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      return res.json({ success: true, message: "Payment verified" });
+    } else {
+      return res.json({ success: false, message: "Payment not completed" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Verification failed" });
   }
 };
 
-module.exports = { placeOrder, verifyPayment };
+
+
+
+module.exports = { placeOrder,verifyPayment};

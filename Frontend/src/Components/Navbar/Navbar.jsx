@@ -88,10 +88,13 @@ const Navbar = () => {
                                 />
                                 <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
                                     <ul className="py-2">
+                                       <Link to="/MyOrders">
                                         <li className="px-4 py-2 hover:bg-orange-100 cursor-pointer flex items-center gap-2">
                                             <img src={assets.bag_icon} alt="Orders" className="w-5 h-5" />
                                             <span>Orders</span>
                                         </li>
+                                       </Link>
+                                       
                                         <li className="px-4 py-2 hover:bg-orange-100 cursor-pointer text-red-600 flex items-center gap-2" onClick={()=>logout()}>
                                             <img src={assets.logout_icon} alt="Logout" className="w-5 h-5" />
                                             <span>Logout</span>

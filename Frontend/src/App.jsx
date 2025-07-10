@@ -13,6 +13,7 @@ import Cart from './Cart/Cart';
 import PlaceOrder from './PlaceOrder/PlaceOrder';
 import SearchFood from './SearchFood/SearchFood';
 import VerifyPage from './Verify/Verify';
+import MyOrders from './MyOrders/MyOrders';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/PlaceOrder" element={<PlaceOrder />} />
           <Route path="/SearchFood" element={<SearchFood />} />
           <Route path="/verify" element={<VerifyPage/>} />
+          <Route path="/MyOrders" element={<MyOrders/>} />
         </Routes>
 
         <Footer />

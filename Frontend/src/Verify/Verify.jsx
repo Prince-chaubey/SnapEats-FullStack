@@ -1,48 +1,51 @@
-import React, { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const VerifyPage = () => {
-  const [params] = useSearchParams();
-  const success = params.get("success");
-  const orderId = params.get("orderId");
+const Verify = () => {
+  const [message, setMessage] = useState("Verifying payment...");
+  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
+  const query = new URLSearchParams(useLocation().search);
+  const orderId = query.get("orderId");
+  const result = query.get("success");
 
   useEffect(() => {
-    const verifyPayment = async () => {
+    const verify = async () => {
       try {
-        await axios.post("http://localhost:8080/api/order/verify", {
-          success,
-          orderId
+        const res = await axios.post("http://localhost:5173/api/order/verify", {
+          success: result,
+          orderId,
         });
-zzz
-       
-        setTimeout(() => {
-          navigate('/');
-        }, 4000);
-
-      } catch (error) {
-        console.error("Verification error:", error.response?.data || error.message);
+        setSuccess(res.data.success);
+        setMessage(res.data.message);
+      } catch {
+        setSuccess(false);
+        setMessage("⚠️ Error verifying payment.");
       }
     };
-
-    if (orderId) {
-      verifyPayment();
+    if (orderId && result) verify();
+    else {
+      setSuccess(false);
+      setMessage("Invalid payment link.");
     }
-  }, [success, orderId, navigate]);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center px-4">
-      <h1 className="text-3xl font-bold mb-4">
-        {success === "true" ? "✅ Payment Successful!" : "❌ Payment Failed"}
-      </h1>
-      <p className="text-lg">
-        {success === "true"
-          ? "Your order has been confirmed. You will be redirected shortly."
-          : "Something went wrong. Redirecting..."}
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md text-center">
+        <h2 className={`text-2xl font-semibold ${success ? "text-green-600" : "text-red-600"}`}>
+          {message}
+        </h2>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          Go to Home
+        </button>
+      </div>
     </div>
   );
 };
 
-export default VerifyPage;
+export default Verify;
