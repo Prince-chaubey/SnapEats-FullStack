@@ -13,7 +13,7 @@ const Verify = () => {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await axios.post("http://localhost:5173/api/order/verify", {
+        const res = await axios.post("http://localhost:8080/api/order/verify", {
           success: result,
           orderId,
         });

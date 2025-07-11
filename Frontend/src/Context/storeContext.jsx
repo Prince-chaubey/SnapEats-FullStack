@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+
 export const contextStore = createContext();
 
 export const ContextProvider = (props) => {
@@ -15,10 +16,10 @@ export const ContextProvider = (props) => {
     email: "",
     password: "",
   });
-  
-  const [userId,setUserId]=useState("");
 
-  const currency="₹";
+  const [userId, setUserId] = useState("");
+
+  const currency = "₹";
   const url = "http://localhost:8080";
   const [food_list, setFoodList] = useState([]);
 
@@ -35,9 +36,13 @@ export const ContextProvider = (props) => {
   // Load user's cart data
   const loadCartData = async (token) => {
     try {
-      const response = await axios.post(url + "/api/cart/get", {}, {
-        headers: { token },
-      });
+      const response = await axios.post(
+        url + "/api/cart/get",
+        {},
+        {
+          headers: { token },
+        }
+      );
       setCartItem(response.data.cartData);
     } catch (error) {
       console.error("Failed to fetch cart:", error);
@@ -52,10 +57,13 @@ export const ContextProvider = (props) => {
     }));
 
     if (token) {
-     const response=await axios.post(url + "/api/cart/add", { itemId: id }, {
-        headers: { token },
-      });
-     
+      await axios.post(
+        url + "/api/cart/add",
+        { itemId: id },
+        {
+          headers: { token },
+        }
+      );
     }
   };
 
@@ -69,10 +77,13 @@ export const ContextProvider = (props) => {
     });
 
     if (token) {
-      const response=await axios.post(url + "/api/cart/remove", { itemId: id }, {
-        headers: { token },
-      });
-       
+      await axios.post(
+        url + "/api/cart/remove",
+        { itemId: id },
+        {
+          headers: { token },
+        }
+      );
     }
   };
 
@@ -80,7 +91,7 @@ export const ContextProvider = (props) => {
   let subtotal = 0;
   food_list.forEach((food) => {
     if (cartItem[food._id]) {
-      subtotal += food.price * cartItem[food._id];
+      subtotal += food.price * cartItem[food._id]*10;
     }
   });
 
@@ -90,10 +101,18 @@ export const ContextProvider = (props) => {
   useEffect(() => {
     const loadData = async () => {
       await fetchFood();
+
       const storedToken = localStorage.getItem("token");
+      const storedUserId = localStorage.getItem("userId");
+
       if (storedToken) {
         setToken(storedToken);
         await loadCartData(storedToken);
+      }
+
+      if (storedUserId) {
+        setLoggedUser(storedUserId);
+        setUserId(storedUserId);
       }
     };
     loadData();
@@ -120,8 +139,9 @@ export const ContextProvider = (props) => {
         setToken,
         setLoggedUser,
         loggedUser,
+        userId,
+        setUserId,
         currency,
-        
       }}
     >
       {props.children}

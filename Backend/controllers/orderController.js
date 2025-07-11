@@ -78,7 +78,15 @@ const verifyPayment = async (req, res) => {
   }
 };
 
+//Controller for user Orders
+const userOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({ userId: req.user.id });
+    res.json({ success: true, data: orders });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false, message: err.message });
+  }
+};
 
-
-
-module.exports = { placeOrder,verifyPayment};
+module.exports = { placeOrder,verifyPayment,userOrders};

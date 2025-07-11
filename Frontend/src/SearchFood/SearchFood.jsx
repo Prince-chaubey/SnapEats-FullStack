@@ -132,7 +132,7 @@ const SearchFood = () => {
                   </div>
                 )}
                 <p className="text-green-700 font-bold text-lg text-right">
-                  ₹{food.price * 100}
+                  ₹{food.price * 10}
                 </p>
               </div>
             </div>
