@@ -89,4 +89,43 @@ const userOrders = async (req, res) => {
   }
 };
 
-module.exports = { placeOrder,verifyPayment,userOrders};
+//Listing all the orders of all the users
+
+const listOrders=async(req,res)=>{
+           try{
+            const orders=await orderModel.find({});
+            res.json({success:true,data:orders});
+           }
+           catch(err){
+            console.log("Error:",err);
+            res.json({success:false,message:err});
+           }
+}
+
+//Order Status
+const updateOrderStatus = async (req, res) => {
+  const { orderId, status } = req.body;
+
+  try {
+    if (!orderId || !status) {
+      return res.status(400).json({ success: false, message: "Order ID and status required" });
+    }
+
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    res.json({ success: true, message: "Order status updated", data: updatedOrder });
+  } catch (error) {
+    console.error("Status update error:", error);
+    res.status(500).json({ success: false, message: "Failed to update order status" });
+  }
+};
+
+module.exports = { placeOrder,verifyPayment,userOrders,listOrders,updateOrderStatus};
