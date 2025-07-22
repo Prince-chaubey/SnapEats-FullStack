@@ -129,4 +129,4 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-module.exports = { placeOrder,verifyPayment,userOrders,listOrders,updateOrderStatus};  do one thing  multiply the price by 10 and make delviery charge 50 only
+module.exports = { placeOrder,verifyPayment,userOrders,listOrders,updateOrderStatus};
