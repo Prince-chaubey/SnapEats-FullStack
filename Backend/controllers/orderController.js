@@ -1,3 +1,11 @@
+const userModel = require("../models/userModel");
+const orderModel = require("../models/orderModel");
+const stripe = require("stripe");
+
+const Stripe = new stripe(process.env.STRIPE_SECRET);
+const Frontend_URL = "http://localhost:5173";
+
+// Placing user order from Frontend
 const placeOrder = async (req, res) => {
   try {
     const newOrder = new orderModel({
@@ -47,3 +55,78 @@ const placeOrder = async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to place order" });
   }
 };
+
+
+const verifyPayment = async (req, res) => {
+  const { orderId, success } = req.body;
+
+  try {
+    if (!orderId) {
+      return res.status(400).json({ success: false, message: "Order ID is required" });
+    }
+
+    const isPaymentSuccess = success === true || success === "true";
+
+    if (isPaymentSuccess) {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      return res.json({ success: true, message: "Payment verified" });
+    } else {
+      return res.json({ success: false, message: "Payment not completed" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Verification failed" });
+  }
+};
+
+//Controller for user Orders
+const userOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({ userId: req.user.id });
+    res.json({ success: true, data: orders });
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false, message: err.message });
+  }
+};
+
+//Listing all the orders of all the users
+
+const listOrders=async(req,res)=>{
+           try{
+            const orders=await orderModel.find({});
+            res.json({success:true,data:orders});
+           }
+           catch(err){
+            console.log("Error:",err);
+            res.json({success:false,message:err});
+           }
+}
+
+//Order Status
+const updateOrderStatus = async (req, res) => {
+  const { orderId, status } = req.body;
+
+  try {
+    if (!orderId || !status) {
+      return res.status(400).json({ success: false, message: "Order ID and status required" });
+    }
+
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    res.json({ success: true, message: "Order status updated", data: updatedOrder });
+  } catch (error) {
+    console.error("Status update error:", error);
+    res.status(500).json({ success: false, message: "Failed to update order status" });
+  }
+};
+
+module.exports = { placeOrder,verifyPayment,userOrders,listOrders,updateOrderStatus};  do one thing  multiply the price by 10 and make delviery charge 50 only
