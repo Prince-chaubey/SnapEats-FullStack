@@ -20,7 +20,7 @@ export const ContextProvider = (props) => {
   const [userId, setUserId] = useState("");
 
   const currency = "₹";
-  const url = "https://snapeats-fullstack-1.onrender.com";
+  const url = "http://localhost:8080";
   const [food_list, setFoodList] = useState([]);
 
   // Fetch food items from backend

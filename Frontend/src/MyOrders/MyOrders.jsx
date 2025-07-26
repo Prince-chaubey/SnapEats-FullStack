@@ -35,7 +35,7 @@ const MyOrders = () => {
                   : `${item.name} x ${item.quantity}, `
               )}
             </p>
-            <p className="text-gray-800 font-semibold">{currency}{order.amount*10}.00</p>
+            <p className="text-gray-800 font-semibold">{currency}{order.amount}.00</p>
             <p className="text-gray-600">Items: <span className="font-medium">{order.items.length}</span></p>
             <p className="flex items-center gap-1 text-gray-700">
               <span className="text-green-500">&#x25cf;</span>

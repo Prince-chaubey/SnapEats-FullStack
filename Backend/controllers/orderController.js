@@ -2,7 +2,8 @@ const userModel = require("../models/userModel");
 const orderModel = require("../models/orderModel");
 const stripe = require("stripe");
 
-const Stripe = new stripe(process.env.STRIPE_SECRET);
+const STRIPE_SECRET= "sk_test_51RiKItHknsYdaZHriursiPrJB2bxCm1byd4e9P9lnAysQwyfDsS9fLviXym5gEy7GQQXET23BbC7PNZvicGkyl9s00RAet4fdp"
+const Stripe = new stripe(STRIPE_SECRET);
 const Frontend_URL = "http://localhost:5173";
 
 // Placing user order from Frontend

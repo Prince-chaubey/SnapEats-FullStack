@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  address: { // ✅ fixed spelling
+  address: { 
     type: Object,
     required: true,
   },
