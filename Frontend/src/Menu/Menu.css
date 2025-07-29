@@ -1,0 +1,16 @@
+.slick-slider .slick-next{
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 5px;
+
+}
+
+
+.slick-slider .slick-prev{
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 5px;
+   
+}

@@ -66,7 +66,7 @@ const Navbar = () => {
                         <Link to="/Cart">
                             <img src={assets.bag_icon} alt="cart" className="w-6 h-6 cursor-pointer hover:scale-110 transition filter invert" />
                             {Object.keys(cartItem).length > 0 && (
-                                <LuDot className='text-orange-600 absolute -top-3 -right-2' size={40} />
+                                <LuDot className='text-orange-600 absolute -top-5 -right-4' size={40} />
                             )}
                         </Link>
                     </div>
@@ -124,7 +124,7 @@ const Navbar = () => {
                             <Link to="/Cart" onClick={() => setSidebar(false)} className="relative">
                                 <img src={assets.bag_icon} alt="cart" className="w-6 h-6 filter invert" />
                                 {Object.keys(cartItem).length > 0 && (
-                                    <LuDot className='text-orange-600 absolute -top-3 -right-2' size={40} />
+                                    <LuDot className='text-orange-600 absolute -top-5 -right-4' size={40} />
                                 )}
                             </Link>
                         </div>
